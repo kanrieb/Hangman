@@ -62,30 +62,27 @@ print()
 print('*' * len(word))
 newWord = '*' * len(word)
 if len(word) <= 4:
-    lives = 5
+    lives = 12
 elif len(word) >=5 or len(word) <= 8 :
     lives = 8
 else:
-    lives = 10 
+    lives = 6 
 
-#restrict letters already used
-#show instances of one letter
-#remove lives if wrong
-correctLetters = []
+gameResult = ''
+#counts letters already used
 usedLetters = []
 
 while lives != 0:
     print("You have %i lives. Guess a letter and press enter:" %lives)
     letter = input()
-    if len(letter) != 1 or not letter.isalpha(): 
-        while len(letter) != 1 or not letter.isalpha():
+    if len(letter) != 1 or not letter.isalpha() or letter in usedLetters: 
+        while len(letter) != 1 or not letter.isalpha() or letter in usedLetters:
             print("Invalid input. Please enter another letter:")
             letter = input().lower()
     print()
     letterCount = word.count(letter)
     if letterCount != 0:
         print("Your letter is in the word.")
-        correctLetters += letter
         counter = 0
         oldWord = newWord
         newWord = ''
@@ -93,17 +90,26 @@ while lives != 0:
             if letter == a:
                 print(a, end='')
                 newWord += a
-            else: 
+            else:
                 print(oldWord[counter], end = '')
                 newWord += oldWord[counter]
             counter += 1
         print()
     else: 
-        print("Your letter is not found in the word. Please try again.")
-        print(newWord)
         lives -= 1
+        if lives > 0:
+            print("Your letter is not found in the word. Please try again.")
+            print(newWord)
     
-#    usedLetters += letter
+    if word == newWord:
+        gameResult = 'win'
+        break
+    else: gameResult = 'lose'
+    usedLetters += letter
+    print("Used Letters: %s" %usedLetters)
 
-print("You are out of lives.")
-print("GAME OVER")
+if gameResult == 'win':
+    print("Congratulations! You have successfully guessed the word!")
+elif gameResult == 'lose':
+    print("You are out of lives. The word was: %s" %word)
+    print("GAME OVER")
