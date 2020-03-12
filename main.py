@@ -28,7 +28,6 @@ def random_line(afile):
       line = aline
     return line
 
-
 print()
 print("Welcome to Hangman.")
 print ("Type Automatic to play the computer, or Manual to enter your own word:")
@@ -52,10 +51,16 @@ if valMode == 'automatic' or valMode == 'Automatic':
 elif valMode == 'manual' or valMode == 'Manual':
     print ("Playing Manual mode. Enter your word:")
     word = input()
+    if not word.isalpha():
+        while not word.isalpha():
+            print("Invalid word. Please try again:")
+            word = input()
+
+print() 
 
 #word has been chosen, game begins now
-print('x' * len(word))
-print()
+print('*' * len(word))
+newWord = '*' * len(word)
 if len(word) <= 4:
     lives = 5
 elif len(word) >=5 or len(word) <= 8 :
@@ -63,4 +68,42 @@ elif len(word) >=5 or len(word) <= 8 :
 else:
     lives = 10 
 
-print("You have %i lives. Please enter a letter:" %lives)
+#restrict letters already used
+#show instances of one letter
+#remove lives if wrong
+correctLetters = []
+usedLetters = []
+
+while lives != 0:
+    print("You have %i lives. Guess a letter and press enter:" %lives)
+    letter = input()
+    if len(letter) != 1 or not letter.isalpha(): 
+        while len(letter) != 1 or not letter.isalpha():
+            print("Invalid input. Please enter another letter:")
+            letter = input().lower()
+    print()
+    letterCount = word.count(letter)
+    if letterCount != 0:
+        print("Your letter is in the word.")
+        correctLetters += letter
+        counter = 0
+        oldWord = newWord
+        newWord = ''
+        for a in word:
+            if letter == a:
+                print(a, end='')
+                newWord += a
+            else: 
+                print(oldWord[counter], end = '')
+                newWord += oldWord[counter]
+            counter += 1
+        print()
+    else: 
+        print("Your letter is not found in the word. Please try again.")
+        print(newWord)
+        lives -= 1
+    
+#    usedLetters += letter
+
+print("You are out of lives.")
+print("GAME OVER")
