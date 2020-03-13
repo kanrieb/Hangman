@@ -30,6 +30,7 @@ bank
 base
 basket
 bath
+bayou
 bean
 bear
 beer
@@ -686,3 +687,6 @@ yell
 young
 your
 zero
+curacao
+buxom
+espionage

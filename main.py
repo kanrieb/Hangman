@@ -1,6 +1,9 @@
 import time
 import random
 
+#hints or topics? I should fix the word list
+#should insert a time limit!
+
 #function to validator automatic/manual, easy/difficult user inputs
 def validatorFunc(funcInput, stage):
     if stage == 'mode':
@@ -98,7 +101,7 @@ while lives != 0:
     else: 
         lives -= 1
         if lives > 0:
-            print("Your letter is not found in the word. Please try again.")
+            print("'%s' is not found in the word. Please try again." %letter)
             print(newWord)
     
     if word == newWord:
